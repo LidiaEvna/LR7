@@ -5,27 +5,23 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            Scanner num = new Scanner(System.in);
-            float x = num.nextFloat();
-            float y = num.nextFloat();
-            float z = num.nextFloat();
+        try{
+            Scanner did = new Scanner(System.in);
 
-            if (x <= 0) {
-                throw new Exception("Вы ввели число меньше нуля");
-            }
-            if (y >= 3) {
-                throw new Exception("Вы ввели число число больше 3");
-            }
-            if (z >= 30) {
-                throw new Exception("Вы ввели число число больше 30");
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            int result=Formula.getFormula(3);
+            System.out.println(result);
         }
+        catch (FormulaException ex){
+            System.out.println(ex.getMessage());
+            System.out.println(ex.getNumber());
+        }
+      Scanner num = new Scanner(System.in);
+        float x = num.nextFloat();
+        float y = num.nextFloat();
+        float z = num.nextFloat();
+
     }
 }
-
     class Formula {
         float x;
         float y;
@@ -36,9 +32,28 @@ public class Main {
             this.y = y;
             this.z = z;
         }
-
         public void displayFormula() {
             double l = Math.sqrt(x * x + y * y + z * z);
             System.out.println(l);
         }
+        public static int getFormula(int num) throws FormulaException {
+            int result = 1;
+            if (num < 1) throw new FormulaException (" Число меньше 1 ", num);
+            for (int p = 1; p <= num; p++) {
+                result *= p;
+            }
+            return result;
+        }
     }
+        class FormulaException extends Exception {
+            private int number;
+
+            public int getNumber() {
+                return number;
+            }
+
+            public FormulaException(String message, int num) {
+                super(message);
+                number = num;
+            }
+        }
